@@ -232,14 +232,20 @@ if (bar) bar.style.setProperty("--w", "0%");
   window.addEventListener("resize", fitCanvas, { passive: true });
   fitCanvas();
 
-  // === MODO FÁCIL ===
-  const GROUND_Y = 170; // suelo
-  const GRAVITY = 1700; // gravedad
-  const JUMP_VY = -640; // fuerza del salto
-  const BASE_SPEED = 220; // velocidad del mundo (más lenta)
-  const ROCK_MIN_GAP = 120; // distancia mínima entre rocas (muy amplia)
-  const ROCK_VAR_GAP = 110; // variación de distancia
-  const MAX_ROCKS = 1; // <-- ¡solo una roca!
+  // === MODO FÁCIL (tus valores) ===
+  const GROUND_Y = 170;
+  const GRAVITY = 1700;
+  const JUMP_VY = -640;
+  const BASE_SPEED = 220;
+  const ROCK_MIN_GAP = 120;
+  const ROCK_VAR_GAP = 110;
+  const MAX_ROCKS = 1;
+
+  // --- Estética 3D (solo dibujo) ---
+  const HORIZON_Y = 80;
+  const PERSPECTIVE = 0.0028;
+  let bg1Offset = 0,
+    bg2Offset = 0;
 
   // Estado
   let speed = BASE_SPEED;
@@ -260,15 +266,14 @@ if (bar) bar.style.setProperty("--w", "0%");
 
   // Obstáculos
   const rocks = [];
-  let spawnCooldown = 0; // distancia restante (en px) para la próxima roca
+  let spawnCooldown = 0;
 
   function spawnRock(initialX) {
-    if (rocks.length >= MAX_ROCKS) return; // nunca más de 1
+    if (rocks.length >= MAX_ROCKS) return;
     const size = 30 + Math.random() * 16;
     const h = size;
     const w = size * (0.95 + Math.random() * 0.15);
     const x = initialX ?? canvas.width / window.devicePixelRatio + 60;
-    // apoyada justo en el suelo, sin “flotar”
     rocks.push({
       x,
       y: GROUND_Y - h,
@@ -321,79 +326,111 @@ if (bar) bar.style.setProperty("--w", "0%");
   window.addEventListener("keydown", onKey);
   restartBtn.addEventListener("click", resetGame);
 
-  // Dibujo
+  // --------- DIBUJO (funciones 3D) ----------
   function drawGround() {
+    const w = canvas.width,
+      h = canvas.height;
+
+    // Cielo
+    const sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, "#0b1020");
+    sky.addColorStop(1, "#0a0f1c");
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+
+    // Capas lejanas (parallax)
+    drawBackDunes(HORIZON_Y + 10, 0.15, "#1a223a", 0.35);
+    drawBackDunes(HORIZON_Y + 24, 0.3, "#242d49", 0.22);
+
+    // Suelo
+    const groundGrad = ctx.createLinearGradient(0, HORIZON_Y, 0, h);
+    groundGrad.addColorStop(0, "#3c2a2a");
+    groundGrad.addColorStop(1, "#7b3626");
+    ctx.fillStyle = groundGrad;
+    ctx.fillRect(0, HORIZON_Y, w, h - HORIZON_Y);
+
+    // Rejilla en perspectiva
     ctx.save();
-    // línea fina del borde del suelo
-    ctx.strokeStyle = "rgba(255,255,255,.12)";
+    ctx.strokeStyle = "rgba(255,255,255,.06)";
     ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(0, GROUND_Y + 0.5);
-    ctx.lineTo(canvas.width, GROUND_Y + 0.5);
-    ctx.stroke();
 
-    // franja y marcas
-    ctx.translate(0, GROUND_Y + 10);
-    ctx.fillStyle = "#7b3626";
-    ctx.fillRect(0, 0, canvas.width, 8);
+    let y = HORIZON_Y + 6,
+      gap = 6;
+    while (y < h) {
+      ctx.globalAlpha = Math.min(1, (y - HORIZON_Y) / 180);
+      ctx.beginPath();
+      ctx.moveTo(0, y + 0.5);
+      ctx.lineTo(w, y + 0.5);
+      ctx.stroke();
+      y += gap;
+      gap *= 1.12;
+    }
 
-    const stripeW = 40;
-    const offset = (performance.now() / (1000 / speed)) % stripeW;
-    ctx.fillStyle = "#a94933";
-    for (let x = -offset; x < canvas.width; x += stripeW) {
-      ctx.fillRect(x, -6, 22, 4);
+    ctx.globalAlpha = 0.12;
+    const vpX = w * 0.5;
+    for (let i = -6; i <= 6; i++) {
+      ctx.beginPath();
+      ctx.moveTo(vpX + i * 90, HORIZON_Y);
+      ctx.lineTo(vpX + i * 2000, h);
+      ctx.stroke();
     }
     ctx.restore();
   }
 
-  function drawRover(dt) {
-    rover.animT += dt;
-    const wobble = Math.sin(rover.animT * 14) * (rover.onGround ? 1 : 0.3);
+  function drawBackDunes(baseY, parallax, color, alpha = 0.3) {
+    const w = canvas.width;
+    if (parallax < 0.2)
+      bg1Offset = (bg1Offset + speed * parallax * 0.016) % (w * 2);
+    else bg2Offset = (bg2Offset + speed * parallax * 0.02) % (w * 2);
+    const off = parallax < 0.2 ? bg1Offset : bg2Offset;
 
     ctx.save();
-    ctx.translate(rover.x, rover.y - rover.h);
-    ctx.fillStyle = "#e4e7f1";
-    roundRect(ctx, 0, 0, rover.w, rover.h, 8, true);
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
 
-    // mástil + cámara
-    ctx.fillStyle = "#d9ddec";
-    ctx.fillRect(8, -26, 8, 26);
-    ctx.fillStyle = "#ffffff";
-    roundRect(ctx, -6, -38, 30, 14, 6, true);
+    const amplitude = 18 + 22 * parallax;
+    const wavelength = 260 + 140 * parallax;
 
-    // ruedas
-    ctx.save();
-    ctx.translate(0, rover.h - 6);
-    for (let i = 0; i < 3; i++) {
-      const rx = 8 + i * 22;
-      drawWheel(rx, 0, wobble + i * 0.4);
+    ctx.beginPath();
+    ctx.moveTo(0, baseY);
+    for (let x = -w; x <= w * 2; x += 4) {
+      const y = baseY + Math.sin((x + off) / wavelength) * amplitude;
+      ctx.lineTo(x, y);
     }
+    ctx.lineTo(w * 2, 0);
+    ctx.lineTo(0, 0);
+    ctx.closePath();
+    ctx.fill();
     ctx.restore();
+  }
 
-    // faro si en la escena grande están las luces encendidas
-    if (
-      !document.querySelector(".rover")?.classList.contains("rover--lights-off")
-    ) {
-      ctx.fillStyle = "rgba(255,255,200,.25)";
-      ctx.beginPath();
-      ctx.moveTo(rover.w - 4, 10);
-      ctx.lineTo(rover.w + 90, -10);
-      ctx.lineTo(rover.w + 90, 26);
-      ctx.closePath();
-      ctx.fill();
-    }
+  function perspScale(yScreen) {
+    const d = Math.max(0, yScreen - HORIZON_Y);
+    return 1 / (1 + d * PERSPECTIVE);
+  }
+
+  function drawShadow(cx, cy, w, h, alpha = 0.35) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = "#000";
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, w, h, 0, 0, Math.PI * 2);
+    ctx.fill();
     ctx.restore();
   }
 
   function drawWheel(x, y, t) {
     ctx.save();
     ctx.translate(x, y);
+    const tireGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, 10);
+    tireGrad.addColorStop(0, "#2a324a");
+    tireGrad.addColorStop(1, "#121728");
+    ctx.fillStyle = tireGrad;
     ctx.beginPath();
     ctx.arc(0, 0, 10, 0, Math.PI * 2);
-    ctx.fillStyle = "#232b3f";
     ctx.fill();
     ctx.lineWidth = 6;
-    ctx.strokeStyle = "#121728";
+    ctx.strokeStyle = "#0c1122";
     ctx.stroke();
     ctx.rotate(t);
     ctx.lineWidth = 2;
@@ -406,15 +443,91 @@ if (bar) bar.style.setProperty("--w", "0%");
   }
 
   function drawRock(r) {
+    const s = perspScale(r.y + r.h);
+    const w3d = r.w * (0.9 + 0.1 * s);
+    const h3d = r.h;
+    const x = r.x;
+    const y = Math.round(r.y);
+
+    drawShadow(x + w3d * 0.5 + 8, y + h3d + 10, w3d * 0.45, 6, 0.28);
+
     ctx.save();
-    ctx.translate(r.x, Math.round(r.y)); // apoyar visualmente
-    ctx.rotate(r.r);
-    ctx.fillStyle = "#a94933";
-    roundRect(ctx, 0, 0, r.w, r.h, 6, true);
+    ctx.translate(x, y);
     ctx.fillStyle = "#7b3626";
-    ctx.globalAlpha = 0.35;
-    roundRect(ctx, 6, 6, r.w * 0.6, r.h * 0.5, 5, true);
+    roundRect(ctx, w3d * 0.15, 0, w3d * 0.85, h3d, 6, true);
+    ctx.fillStyle = "#a94933";
+    roundRect(ctx, 0, 0, w3d * 0.8, h3d, 6, true);
+    ctx.fillStyle = "#c55b44";
+    ctx.beginPath();
+    ctx.moveTo(8, 0);
+    ctx.lineTo(w3d * 0.8 - 8, 0);
+    ctx.lineTo(w3d * 0.8 - 16, 10);
+    ctx.lineTo(16, 10);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 0.2;
+    ctx.fillStyle = "#ffd1a6";
+    roundRect(ctx, 6, 6, w3d * 0.5, h3d * 0.45, 6, true);
     ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  function drawRover(dt) {
+    rover.animT += dt;
+    const wobble = Math.sin(rover.animT * 14) * (rover.onGround ? 1 : 0.3);
+
+    drawShadow(
+      rover.x + rover.w * 0.5 + 10,
+      rover.y + 10,
+      rover.w * 0.6,
+      7,
+      0.33
+    );
+
+    ctx.save();
+    ctx.translate(rover.x, rover.y - rover.h);
+    const bodyGrad = ctx.createLinearGradient(0, 0, 0, rover.h);
+    bodyGrad.addColorStop(0, "#f3f5fb");
+    bodyGrad.addColorStop(1, "#d0d6e6");
+    ctx.fillStyle = bodyGrad;
+    roundRect(ctx, 0, 0, rover.w, rover.h, 10, true);
+
+    ctx.globalAlpha = 0.18;
+    ctx.fillStyle = "#ffffff";
+    roundRect(ctx, 4, 4, rover.w - 8, 10, 8, true);
+    ctx.globalAlpha = 1;
+
+    const mastGrad = ctx.createLinearGradient(0, -26, 0, 26);
+    mastGrad.addColorStop(0, "#eef1f8");
+    mastGrad.addColorStop(1, "#c9d0e3");
+    ctx.fillStyle = mastGrad;
+    ctx.fillRect(8, -26, 8, 26);
+
+    const camGrad = ctx.createLinearGradient(0, -38, 0, -24);
+    camGrad.addColorStop(0, "#ffffff");
+    camGrad.addColorStop(1, "#dfe5f4");
+    ctx.fillStyle = camGrad;
+    roundRect(ctx, -6, -38, 30, 14, 6, true);
+
+    ctx.save();
+    ctx.translate(0, rover.h - 6);
+    for (let i = 0; i < 3; i++) {
+      const rx = 8 + i * 22;
+      drawWheel(rx, 0, wobble + i * 0.4);
+    }
+    ctx.restore();
+
+    if (
+      !document.querySelector(".rover")?.classList.contains("rover--lights-off")
+    ) {
+      ctx.fillStyle = "rgba(255,255,200,.22)";
+      ctx.beginPath();
+      ctx.moveTo(rover.w - 4, 10);
+      ctx.lineTo(rover.w + 110, -10);
+      ctx.lineTo(rover.w + 110, 26);
+      ctx.closePath();
+      ctx.fill();
+    }
     ctx.restore();
   }
 
@@ -428,13 +541,13 @@ if (bar) bar.style.setProperty("--w", "0%");
     if (fill) c.fill();
   }
 
-  // Bucle principal
+  // --------- BUCLE PRINCIPAL ----------
   function loop(ts) {
     if (!running) return;
     const dt = Math.min((ts - lastTime) / 1000, 0.05);
     lastTime = ts;
 
-    // física
+    // Física
     rover.vy += GRAVITY * dt;
     rover.y += rover.vy * dt;
     if (rover.y >= GROUND_Y) {
@@ -443,10 +556,10 @@ if (bar) bar.style.setProperty("--w", "0%");
       rover.onGround = true;
     }
 
-    // mover roca
+    // Mover rocas
     for (const r of rocks) r.x -= speed * dt;
 
-    // si no hay roca, contamos “distancia” para la siguiente y la creamos
+    // Spawning
     if (rocks.length === 0) {
       spawnCooldown -= speed * dt;
       if (spawnCooldown <= 0) {
@@ -455,23 +568,22 @@ if (bar) bar.style.setProperty("--w", "0%");
       }
     }
 
-    // si la roca salió por la izquierda, elimínala y prepara siguiente
+    // Limpiar rocas fuera
     while (rocks.length && rocks[0].x + rocks[0].w < -20) {
       rocks.shift();
       spawnCooldown = ROCK_MIN_GAP + Math.random() * ROCK_VAR_GAP;
     }
 
-    // puntuación al pasar la roca
+    // Puntuación al pasar rocas
     for (const r of rocks) {
       if (!r.passed && r.x + r.w < rover.x) {
         r.passed = true;
         score += 1;
         scoreEl.textContent = String(score);
-        // Sin incremento de velocidad → juego fácil
       }
     }
 
-    // colisión
+    // Colisión
     for (const r of rocks) {
       if (
         aabb(rover.x, rover.y - rover.h, rover.w, rover.h, r.x, r.y, r.w, r.h)
@@ -481,7 +593,7 @@ if (bar) bar.style.setProperty("--w", "0%");
       }
     }
 
-    // dibujar
+    // Dibujo (orden)
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGround();
     for (const r of rocks) drawRock(r);
@@ -510,6 +622,6 @@ if (bar) bar.style.setProperty("--w", "0%");
     return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
   }
 
-  // ARRANCA AUTOMÁTICAMENTE (no necesitas pulsar espacio para verlo)
+  // Inicia el juego
   resetGame();
 })();
