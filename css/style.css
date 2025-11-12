@@ -1,0 +1,545 @@
+/* ========== Tokens ==========
+   Escalable, limpio y fácil de ajustar
+*/
+:root {
+  --bg: #0a0f1c;
+  --bg-contrast: #0e1222;
+  --text: #ebf2ff;
+  --muted: #a8b3cf;
+  --primary: #ff6b6b;
+  --accent: #ffd166;
+  --outline: #2b3350;
+
+  --mars-1: #ce5b3e;
+  --mars-2: #8f3d2b;
+
+  --success: #25d366;
+  --danger: #ff4757;
+
+  --radius: 16px;
+  --gap: 16px;
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.45);
+
+  --font: "Outfit", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+
+  --fs-0: clamp(12px, 0.9vw, 14px);
+  --fs-1: clamp(14px, 1vw, 16px);
+  --fs-2: clamp(16px, 1.2vw, 18px);
+  --fs-3: clamp(20px, 2.2vw, 34px);
+  --fs-4: clamp(48px, 8vw, 120px);
+}
+
+•⁠ ⁠ {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background: radial-gradient(
+      1200px 600px at 70% -10%,
+      #1b2238 0%,
+      var(--bg) 60%
+    )
+    fixed;
+  line-height: 1.5;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+}
+.skip-link:focus {
+  left: 8px;
+  top: 8px;
+  background: #000;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 9999;
+}
+
+.site-header,
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px clamp(16px, 4vw, 56px);
+}
+.site-header {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(6px);
+  background: rgba(10, 15, 28, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 10;
+}
+.site-footer {
+  opacity: 0.9;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.brand-text {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.logo {
+  width: 28px;
+  height: 28px;
+}
+.logo-planet {
+  fill: var(--primary);
+}
+.logo-crater {
+  fill: rgba(0, 0, 0, 0.2);
+}
+.logo-ring {
+  fill: none;
+  stroke: #fff;
+  stroke-opacity: 0.25;
+  stroke-width: 2;
+}
+
+.util-nav {
+  display: flex;
+  gap: 8px;
+}
+.ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.ghost:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.container {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: 24px clamp(16px, 4vw, 56px);
+}
+
+.title-404 {
+  margin: 8vh 0 8px;
+  text-align: center;
+}
+.title-404__big {
+  font-size: var(--fs-4);
+  font-weight: 800;
+  letter-spacing: 2px;
+  display: block;
+  filter: drop-shadow(0 8px 40px rgba(255, 107, 107, 0.35));
+}
+
+.lead {
+  text-align: center;
+  font-size: var(--fs-2);
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.cta-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.btn {
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.primary {
+  background: #1b2440;
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+.primary:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+.accent {
+  background: var(--accent);
+  color: #23180f;
+}
+.accent:hover {
+  box-shadow: 0 8px 24px rgba(255, 209, 102, 0.35);
+}
+
+.scanner {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 12px;
+  box-shadow: var(--shadow-lg);
+  max-width: 680px;
+  margin: 10px auto 0;
+}
+.scanner__bar {
+  position: relative;
+  height: 14px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #0f1630;
+  outline: 1px solid rgba(255, 255, 255, 0.08);
+}
+.scanner__bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.05)
+  );
+  transform: translateX(-100%);
+  animation: shimmer 1.2s linear infinite;
+}
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+.scanner__pct {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+}
+.scanner__status {
+  margin: 10px 4px 0;
+  color: var(--muted);
+  font-size: var(--fs-1);
+}
+
+.scene {
+  position: relative;
+  height: clamp(280px, 46vh, 520px);
+  margin-top: 28px;
+}
+.parallax {
+  will-change: transform;
+}
+#stars {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.mars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.crater {
+  fill: rgba(0, 0, 0, 0.2);
+}
+.dune {
+  fill: #a94933;
+  opacity: 0.6;
+}
+.dune--2 {
+  fill: #7b3626;
+  opacity: 0.7;
+}
+
+.rover {
+  position: absolute;
+  left: 12%;
+  bottom: 10%;
+  display: grid;
+  place-items: center;
+  gap: 6px;
+}
+.rover__body {
+  width: 150px;
+  height: 46px;
+  border-radius: 10px;
+  background: #e4e7f1;
+  box-shadow: inset 0 -3px 0 #c7ccdb, 0 14px 30px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+.rover__mast {
+  position: absolute;
+  left: 14px;
+  bottom: 38px;
+  width: 10px;
+  height: 38px;
+  background: #d9ddec;
+  border-radius: 4px;
+}
+.rover__cam {
+  position: absolute;
+  left: -6px;
+  bottom: 70px;
+  width: 36px;
+  height: 18px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 0 #c7ccdb;
+}
+.rover__wheels {
+  display: flex;
+  gap: 12px;
+  position: relative;
+  margin-top: -6px;
+}
+.rover__wheels span {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #232b3f;
+  box-shadow: inset 0 0 0 6px #121728, 0 10px 16px rgba(0, 0, 0, 0.45);
+  animation: roll 12s linear infinite;
+}
+@keyframes roll {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rover__lights {
+  position: absolute;
+  left: 118px;
+  bottom: 18px;
+  display: flex;
+  gap: 8px;
+}
+.beam {
+  width: 0;
+  height: 0;
+  border-left: 0 solid transparent;
+  border-right: 70px solid transparent;
+  border-top: 24px solid rgba(255, 255, 200, 0.25);
+  filter: url(#softGlow);
+  transform-origin: left center;
+  transform: rotate(-6deg);
+}
+.beam + .beam {
+  transform: rotate(8deg) translateY(-8px);
+}
+
+.chip {
+  margin-top: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: var(--fs-0);
+  cursor: pointer;
+}
+.rover--lights-off .beam {
+  display: none;
+}
+
+.astro {
+  position: absolute;
+  right: 14%;
+  top: 10%;
+  width: 140px;
+  height: 160px;
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+.astro__head,
+.astro__pack,
+.astro__arm,
+.astro__leg {
+  background: #e8edf8;
+  border-radius: 10px;
+  position: absolute;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+.astro__head {
+  width: 64px;
+  height: 64px;
+  top: 0;
+  left: 38px;
+  border-radius: 14px;
+}
+.astro__head::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 10px;
+  background: #0f1630;
+}
+.astro__pack {
+  width: 70px;
+  height: 36px;
+  top: 66px;
+  left: 30px;
+}
+.astro__arm {
+  width: 14px;
+  height: 46px;
+  top: 66px;
+  left: 18px;
+  transform: rotate(-20deg);
+}
+.astro__leg {
+  width: 18px;
+  height: 58px;
+  top: 98px;
+  left: 48px;
+}
+
+.hints {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  color: var(--muted);
+}
+.hints kbd {
+  background: #11172b;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+footer a {
+  color: var(--accent);
+}
+
+/* Accesibilidad: alto contraste */
+.high-contrast {
+  --bg: #000000;
+  --bg-contrast: #000000;
+  --text: #ffffff;
+  --muted: #f3f3f3;
+  --primary: #ff3b30;
+  --accent: #ffd60a;
+  background: #000 !important;
+}
+.high-contrast .primary {
+  background: #111;
+}
+.high-contrast .scanner {
+  background: #111;
+}
+
+/* Animación reducida */
+.reduce-motion * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Responsivo */
+@media (max-width: 640px) {
+  .title-404__big {
+    letter-spacing: 1px;
+  }
+  .astro {
+    right: 6%;
+    top: 8%;
+    transform: scale(0.9);
+  }
+  .rover {
+    left: 6%;
+  }
+}
+
+/* Utilidades */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* === Rover Runner (mini-juego) === */
+.runner {
+  margin: 36px auto 24px;
+  max-width: 980px;
+  background: linear-gradient(
+    180deg,
+    rgba(27, 36, 64, 0.6),
+    rgba(10, 15, 28, 0.6)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 16px;
+}
+.runner__title {
+  margin: 0 0 6px;
+  font-size: var(--fs-3);
+}
+.runner__hint {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: var(--fs-1);
+}
+
+#runner {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: radial-gradient(
+      600px 200px at 80% -20%,
+      rgba(255, 255, 255, 0.06),
+      transparent
+    ),
+    linear-gradient(#0e1428 0%, #0a0f1c 100%);
+  border-radius: 12px;
+  outline: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* HUD */
+.runner__hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  color: var(--text);
+}
+#runner-restart {
+  padding: 8px 12px;
+}
+
+/* Alto contraste y animación reducida respetadas automáticamente por colores/JS */
