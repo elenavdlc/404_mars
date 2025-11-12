@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../assets/css/error.css" />
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -180,19 +180,12 @@
               Luces rover
             </button>
           </div>
-
-          <!-- Astronauta flotando -->
+          <!-- Sombra y relieve del rover -->
           <div
-            class="astro parallax"
-            data-depth="-0.08"
-            role="img"
-            aria-label="Astronauta flotando"
-          >
-            <div class="astro__head"></div>
-            <div class="astro__pack"></div>
-            <div class="astro__arm"></div>
-            <div class="astro__leg"></div>
-          </div>
+            class="rover-shadow parallax"
+            data-depth="0.12"
+            aria-hidden="true"
+          ></div>
         </figure>
 
         <ul class="hints" aria-label="Atajos de teclado">
@@ -231,6 +224,6 @@
       <p>Hecho con ❤️ en Marte • <a href="#" id="share">Compartir</a></p>
     </footer>
 
-    <script src="../assets/js/error.js" defer></script>
+    <script src="./js/script.js" defer></script>
   </body>
 </html>
