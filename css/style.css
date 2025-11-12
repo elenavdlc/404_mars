@@ -165,7 +165,7 @@ body {
   border: 0;
   cursor: pointer;
   font-weight: 600;
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s; ease;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
