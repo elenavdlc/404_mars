@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>404 – Perdidos rumbo a Marte</title>
+    <meta
+      name="description"
+      content="Página no encontrada. Perdidos en Marte. Volvamos a casa."
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/error.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <header class="site-header" role="banner">
+      <div class="brand">
+        <svg aria-hidden="true" viewBox="0 0 48 48" class="logo">
+          <circle cx="24" cy="24" r="22" class="logo-planet" />
+          <circle cx="14" cy="18" r="2" class="logo-crater" />
+          <circle cx="30" cy="30" r="3" class="logo-crater" />
+          <path d="M2 22c12-10 32-10 44 0" class="logo-ring" />
+          <path d="M2 26c12 10 32 10 44 0" class="logo-ring" />
+        </svg>
+        <span class="brand-text">404s to Mars</span>
+      </div>
+      <nav aria-label="utilidades" class="util-nav">
+        <button
+          id="toggle-contrast"
+          class="ghost"
+          aria-pressed="false"
+          title="Alternar alto contraste (C)"
+        >
+          Alto contraste
+        </button>
+        <button
+          id="toggle-motion"
+          class="ghost"
+          aria-pressed="false"
+          title="Reducir animaciones (M)"
+        >
+          Menos animación
+        </button>
+      </nav>
+    </header>
+
+    <!-- Fondo interactivo -->
+    <canvas id="stars" aria-hidden="true"></canvas>
+
+    <main id="contenido" class="container" role="main">
+      <section class="hero" aria-labelledby="titulo-404">
+        <div class="parallax" data-depth="0.06" aria-hidden="true">
+          <div class="orbit orbit--1"></div>
+          <div class="orbit orbit--2"></div>
+        </div>
+
+        <h1 id="titulo-404" class="title-404">
+          <span class="title-404__big" aria-hidden="true">404</span>
+          <span class="sr-only">Error 404</span>
+        </h1>
+
+        <p class="lead">
+          Bip bip... este rover
+          <strong>no encuentra la página.</strong>
+        </p>
+
+        <div class="cta-row">
+          <a
+            id="home-link"
+            href="/"
+            class="btn primary"
+            aria-label="Volver a la página de inicio (tecla H)"
+          >
+            ← Volver al inicio
+          </a>
+          <button
+            id="scan"
+            class="btn accent"
+            aria-controls="scanner"
+            aria-expanded="false"
+          >
+            🔎 Escanear ruta
+          </button>
+        </div>
+
+        <!-- Panel de escaneo -->
+        <div id="scanner" class="scanner" hidden>
+          <div
+            class="scanner__bar"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <span class="scanner__pct" id="scan-pct">0%</span>
+          </div>
+          <p id="scan-status" class="scanner__status">
+            Iniciando escaneo de coordenadas...
+          </p>
+        </div>
+
+        <!-- Escena -->
+        <figure
+          class="scene"
+          aria-label="Superficie de Marte con rover y astronauta"
+        >
+          <!-- Capa parallax: Marte -->
+          <svg
+            class="mars"
+            viewBox="0 0 600 300"
+            role="img"
+            aria-label="Planeta Marte"
+          >
+            <defs>
+              <linearGradient id="marsGrad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="var(--mars-1)" />
+                <stop offset="100%" stop-color="var(--mars-2)" />
+              </linearGradient>
+              <filter
+                id="softGlow"
+                x="-50%"
+                y="-50%"
+                width="200%"
+                height="200%"
+              >
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <g class="parallax" data-depth="0.03">
+              <circle cx="470" cy="80" r="70" fill="url(#marsGrad)" />
+              <circle cx="440" cy="70" r="8" class="crater" />
+              <circle cx="500" cy="100" r="10" class="crater" />
+            </g>
+            <g class="parallax dunes" data-depth="0.1">
+              <path
+                d="M0,220 C120,190 220,230 340,210 C430,195 520,220 600,205 L600,300 L0,300 Z"
+                class="dune"
+              ></path>
+              <path
+                d="M0,240 C120,210 220,250 340,230 C430,215 520,240 600,225 L600,300 L0,300 Z"
+                class="dune dune--2"
+              ></path>
+            </g>
+          </svg>
+
+          <!-- Rover -->
+          <div
+            class="rover parallax"
+            data-depth="0.16"
+            role="img"
+            aria-label="Rover con faros"
+          >
+            <div class="rover__body">
+              <div class="rover__mast"></div>
+              <div class="rover__cam"></div>
+            </div>
+            <div class="rover__wheels">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="rover__lights" aria-hidden="true">
+              <span class="beam"></span>
+              <span class="beam"></span>
+            </div>
+            <button
+              id="toggle-lights"
+              class="chip"
+              aria-pressed="true"
+              title="Alternar luces del rover (R)"
+            >
+              Luces rover
+            </button>
+          </div>
+
+          <!-- Astronauta flotando -->
+          <div
+            class="astro parallax"
+            data-depth="-0.08"
+            role="img"
+            aria-label="Astronauta flotando"
+          >
+            <div class="astro__head"></div>
+            <div class="astro__pack"></div>
+            <div class="astro__arm"></div>
+            <div class="astro__leg"></div>
+          </div>
+        </figure>
+
+        <ul class="hints" aria-label="Atajos de teclado">
+          <li><kbd>H</kbd> Inicio</li>
+          <li><kbd>R</kbd> Luces rover</li>
+          <li><kbd>C</kbd> Alto contraste</li>
+          <li><kbd>M</kbd> Menos animación</li>
+        </ul>
+      </section>
+
+      <section class="runner" aria-labelledby="runner-title">
+        <h2 id="runner-title" class="runner__title">
+          Mini juego: Rover Runner
+        </h2>
+        <p class="runner__hint">
+          Pulsa <kbd>Espacio</kbd> o toca la pantalla para saltar. Evita las
+          rocas.
+        </p>
+        <canvas
+          id="runner"
+          width="900"
+          height="220"
+          aria-label="Juego del rover saltarín"
+        ></canvas>
+
+        <div class="runner__hud">
+          <span>Puntuación: <strong id="runner-score">0</strong></span>
+          <button id="runner-restart" class="btn primary" hidden>
+            Reiniciar (R)
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <p>Hecho con ❤️ en Marte • <a href="#" id="share">Compartir</a></p>
+    </footer>
+
+    <script src="../assets/js/error.js" defer></script>
+  </body>
+</html>
