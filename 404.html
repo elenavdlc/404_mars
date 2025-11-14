@@ -120,10 +120,10 @@
             aria-label="Planeta Marte"
           >
             <defs>
-              <linearGradient id="marsGrad" x1="0" x2="0" y1="0" y2="1">
+              <lineargradient id="marsgrad" x1="0" x2="0" y1="0" y2="1">
                 <stop offset="0%" stop-color="var(--mars-1)" />
                 <stop offset="100%" stop-color="var(--mars-2)" />
-              </linearGradient>
+              </lineargradient>
               <filter
                 id="softGlow"
                 x="-50%"
@@ -131,11 +131,11 @@
                 width="200%"
                 height="200%"
               >
-                <feGaussianBlur stdDeviation="6" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
+                <fegaussianblur stdDeviation="4" result="blur" />
+                <femerge>
+                  <femergenode in="blur" />
+                  <femergenode in="SourceGraphic" />
+                </femerge>
               </filter>
             </defs>
             <g class="parallax" data-depth="0.03">
