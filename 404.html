@@ -1,9 +1,13 @@
 <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>404 – Perdidos rumbo a Marte</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Lost in Mars</title>
+    <link rel="stylesheet" href="css/style.css" />
+
     <meta
       name="description"
       content="Página no encontrada. Perdidos en Marte. Volvamos a casa."
@@ -14,11 +18,12 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./css/style.css" />
   </head>
+
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
+    <!-- HEADER -->
     <header class="site-header" role="banner">
       <div class="brand">
         <svg aria-hidden="true" viewBox="0 0 48 48" class="logo">
@@ -30,6 +35,7 @@
         </svg>
         <span class="brand-text">404s to Mars</span>
       </div>
+
       <nav aria-label="utilidades" class="util-nav">
         <button
           id="toggle-contrast"
@@ -50,10 +56,12 @@
       </nav>
     </header>
 
-    <!-- Fondo interactivo -->
+    <!-- FONDO DE ESTRELLAS -->
     <canvas id="stars" aria-hidden="true"></canvas>
 
+    <!-- MAIN -->
     <main id="contenido" class="container" role="main">
+      <!-- TEXTO E ILUSTRACIÓN -->
       <section class="hero" aria-labelledby="titulo-404">
         <div class="parallax" data-depth="0.06" aria-hidden="true">
           <div class="orbit orbit--1"></div>
@@ -196,6 +204,7 @@
         </ul>
       </section>
 
+      <!-- MINIJUEGO -->
       <section class="runner" aria-labelledby="runner-title">
         <h2 id="runner-title" class="runner__title">
           Mini juego: Rover Runner
