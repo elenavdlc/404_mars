@@ -1,6 +1,4 @@
-/* ========== Tokens ==========
-   Escalable, limpio y fácil de ajustar
-*/
+/* TOKENS */
 :root {
   --bg: #0a0f1c;
   --bg-contrast: #0e1222;
@@ -30,13 +28,16 @@
   --fs-4: clamp(48px, 8vw, 120px);
 }
 
-•⁠ ⁠ {
+•⁠ {
   box-sizing: border-box;
 }
+
+/* BODY */
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: var(--font);
@@ -50,11 +51,13 @@ body {
   line-height: 1.5;
 }
 
+/* INCIO DEL JUEGO */
 .skip-link {
   position: absolute;
   left: -9999px;
   top: auto;
 }
+
 .skip-link:focus {
   left: 8px;
   top: 8px;
@@ -65,6 +68,7 @@ body {
   z-index: 9999;
 }
 
+/* HEADER */
 .site-header,
 .site-footer {
   display: flex;
@@ -72,6 +76,7 @@ body {
   justify-content: space-between;
   padding: 16px clamp(16px, 4vw, 56px);
 }
+
 .site-header {
   position: sticky;
   top: 0;
@@ -80,30 +85,33 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   z-index: 10;
 }
-.site-footer {
-  opacity: 0.9;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
 
+/* BRAND */
 .brand {
   display: flex;
   gap: 10px;
   align-items: center;
 }
+
 .brand-text {
   font-weight: 800;
   letter-spacing: 0.5px;
 }
+
+/* ICONO MARTE */
 .logo {
   width: 28px;
   height: 28px;
 }
+
 .logo-planet {
   fill: var(--primary);
 }
+
 .logo-crater {
   fill: rgba(0, 0, 0, 0.2);
 }
+
 .logo-ring {
   fill: none;
   stroke: #fff;
@@ -111,10 +119,12 @@ body {
   stroke-width: 2;
 }
 
+/* BOTÓN ALTO CONTRSTE */
 .util-nav {
   display: flex;
   gap: 8px;
 }
+
 .ghost {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -123,20 +133,24 @@ body {
   border-radius: 999px;
   cursor: pointer;
 }
+
 .ghost:hover {
   border-color: rgba(255, 255, 255, 0.35);
 }
 
+/* MAIN */
 .container {
   max-width: 1100px;
   margin-inline: auto;
   padding: 24px clamp(16px, 4vw, 56px);
 }
 
+/* TÍTULO */
 .title-404 {
   margin: 8vh 0 8px;
   text-align: center;
 }
+
 .title-404__big {
   font-size: var(--fs-4);
   font-weight: 800;
@@ -145,6 +159,19 @@ body {
   filter: drop-shadow(0 8px 40px rgba(255, 107, 107, 0.35));
 }
 
+/* ERROR 404 */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* TEXTO HUMORÍSTICO */
 .lead {
   text-align: center;
   font-size: var(--fs-2);
@@ -152,6 +179,7 @@ body {
   margin-bottom: 24px;
 }
 
+/* BOTONES */
 .cta-row {
   display: flex;
   gap: 12px;
@@ -159,6 +187,7 @@ body {
   flex-wrap: wrap;
   margin-bottom: 16px;
 }
+
 .btn {
   padding: 12px 16px;
   border-radius: 999px;
@@ -171,25 +200,31 @@ body {
   align-items: center;
   gap: 8px;
 }
+
 .btn:active {
   transform: translateY(1px);
 }
+
 .primary {
   background: #1b2440;
   color: var(--text);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
 }
+
 .primary:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
+
 .accent {
   background: var(--accent);
   color: #23180f;
 }
+
 .accent:hover {
   box-shadow: 0 8px 24px rgba(255, 209, 102, 0.35);
 }
 
+/* ESCANEAR RUTA */
 .scanner {
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -199,6 +234,7 @@ body {
   max-width: 680px;
   margin: 10px auto 0;
 }
+
 .scanner__bar {
   position: relative;
   height: 14px;
@@ -207,6 +243,7 @@ body {
   background: #0f1630;
   outline: 1px solid rgba(255, 255, 255, 0.08);
 }
+
 .scanner__bar::before {
   content: "";
   position: absolute;
@@ -220,11 +257,13 @@ body {
   transform: translateX(-100%);
   animation: shimmer 1.2s linear infinite;
 }
+
 @keyframes shimmer {
   to {
     transform: translateX(100%);
   }
 }
+
 .scanner__pct {
   position: absolute;
   inset: 0;
@@ -234,6 +273,8 @@ body {
   color: #fff;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
 }
+
+/* ESCENA */
 .scanner__status {
   margin: 10px 4px 0;
   color: var(--muted);
@@ -245,9 +286,11 @@ body {
   height: clamp(280px, 46vh, 520px);
   margin-top: 28px;
 }
+
 .parallax {
   will-change: transform;
 }
+
 #stars {
   position: fixed;
   inset: 0;
@@ -260,18 +303,23 @@ body {
   width: 100%;
   height: 100%;
 }
+
 .crater {
   fill: rgba(0, 0, 0, 0.2);
 }
+
+/* ROCAS */
 .dune {
   fill: #a94933;
   opacity: 0.6;
 }
+
 .dune--2 {
   fill: #7b3626;
   opacity: 0.7;
 }
 
+/* ROBOT */
 .rover {
   position: absolute;
   left: 12%;
@@ -280,6 +328,7 @@ body {
   place-items: center;
   gap: 6px;
 }
+
 .rover__body {
   width: 150px;
   height: 46px;
@@ -288,6 +337,7 @@ body {
   box-shadow: inset 0 -3px 0 #c7ccdb, 0 14px 30px rgba(0, 0, 0, 0.35);
   position: relative;
 }
+
 .rover__mast {
   position: absolute;
   left: 14px;
@@ -297,6 +347,7 @@ body {
   background: #d9ddec;
   border-radius: 4px;
 }
+
 .rover__cam {
   position: absolute;
   left: -6px;
@@ -307,12 +358,14 @@ body {
   border-radius: 6px;
   box-shadow: 0 2px 0 #c7ccdb;
 }
+
 .rover__wheels {
   display: flex;
   gap: 12px;
   position: relative;
   margin-top: -6px;
 }
+
 .rover__wheels span {
   width: 34px;
   height: 34px;
@@ -321,6 +374,7 @@ body {
   box-shadow: inset 0 0 0 6px #121728, 0 10px 16px rgba(0, 0, 0, 0.45);
   animation: roll 12s linear infinite;
 }
+
 @keyframes roll {
   to {
     transform: rotate(360deg);
@@ -334,6 +388,7 @@ body {
   display: flex;
   gap: 8px;
 }
+
 .beam {
   width: 0;
   height: 0;
@@ -344,6 +399,7 @@ body {
   transform-origin: left center;
   transform: rotate(-6deg);
 }
+
 .beam + .beam {
   transform: rotate(8deg) translateY(-8px);
 }
@@ -358,6 +414,7 @@ body {
   font-size: var(--fs-0);
   cursor: pointer;
 }
+
 .rover--lights-off .beam {
   display: none;
 }
@@ -370,6 +427,7 @@ body {
   height: 160px;
   animation: float 6s ease-in-out infinite;
 }
+
 @keyframes float {
   0%,
   100% {
@@ -379,6 +437,7 @@ body {
     transform: translateY(-10px) rotate(2deg);
   }
 }
+
 .astro__head,
 .astro__pack,
 .astro__arm,
@@ -388,6 +447,7 @@ body {
   position: absolute;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
+
 .astro__head {
   width: 64px;
   height: 64px;
@@ -422,6 +482,7 @@ body {
   left: 48px;
 }
 
+/* SOMBRA Y RELIEVE DEL ROBOT */
 .hints {
   display: flex;
   gap: 10px;
@@ -431,6 +492,7 @@ body {
   margin: 14px 0 0;
   color: var(--muted);
 }
+
 .hints kbd {
   background: #11172b;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -438,11 +500,7 @@ body {
   border-radius: 6px;
 }
 
-footer a {
-  color: var(--accent);
-}
-
-/* Accesibilidad: alto contraste */
+/* ALTO CONTRASTE */
 .high-contrast {
   --bg: #000000;
   --bg-contrast: #000000;
@@ -452,20 +510,22 @@ footer a {
   --accent: #ffd60a;
   background: #000 !important;
 }
+
 .high-contrast .primary {
   background: #111;
 }
+
 .high-contrast .scanner {
   background: #111;
 }
 
-/* Animación reducida */
+/* MENOS ANIMACIÓN */
 .reduce-motion * {
   animation: none !important;
   transition: none !important;
 }
 
-/* === Efecto 3D y sombra del rover === */
+/* 3D */
 .rover-shadow {
   position: absolute;
   left: 12%;
@@ -488,21 +548,23 @@ footer a {
     inset 0 -4px 0 rgba(0, 0, 0, 0.25);
   transform: translateZ(10px);
 }
+
 .rover__cam {
   background: linear-gradient(to bottom, #fff, #d8dbeb);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
+
 .rover__wheels span {
   box-shadow: inset 0 0 0 5px #121728, 0 8px 12px rgba(0, 0, 0, 0.6);
 }
 
-/* Rocas con relieve */
+/* ROCAS MINIJUEGO */
 .dune,
 .dune--2 {
   filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.35));
 }
 
-/* Movimiento sutil del rover */
+/* MOVIMIENTO DEL MINIJUEGO */
 .rover {
   animation: rover-bob 2s ease-in-out infinite;
 }
@@ -516,34 +578,7 @@ footer a {
   }
 }
 
-/* Responsivo */
-@media (max-width: 640px) {
-  .title-404__big {
-    letter-spacing: 1px;
-  }
-  .astro {
-    right: 6%;
-    top: 8%;
-    transform: scale(0.9);
-  }
-  .rover {
-    left: 6%;
-  }
-}
-
-/* Utilidades */
-.sr-only {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
-/* === Rover Runner (mini-juego) === */
+/* MINIJUEGO */
 .runner {
   margin: 36px auto 24px;
   max-width: 980px;
@@ -557,10 +592,12 @@ footer a {
   box-shadow: var(--shadow-lg);
   padding: 16px;
 }
+
 .runner__title {
   margin: 0 0 6px;
   font-size: var(--fs-3);
 }
+
 .runner__hint {
   margin: 0 0 12px;
   color: var(--muted);
@@ -589,8 +626,32 @@ footer a {
   margin-top: 10px;
   color: var(--text);
 }
+
 #runner-restart {
   padding: 8px 12px;
 }
 
-/* Alto contraste y animación reducida respetadas automáticamente por colores/JS */
+/* FOOTER */
+.site-footer {
+  opacity: 0.9;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+footer a {
+  color: var(--accent);
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 640px) {
+  .title-404__big {
+    letter-spacing: 1px;
+  }
+  .astro {
+    right: 6%;
+    top: 8%;
+    transform: scale(0.9);
+  }
+  .rover {
+    left: 6%;
+  }
+}

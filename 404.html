@@ -13,10 +13,12 @@
   </head>
 
   <body>
+    <!-- INICIO DEL JUEGO -->
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
     <!-- HEADER -->
     <header class="site-header" role="banner">
+      <!-- ICONO MARTE -->
       <div class="brand">
         <svg aria-hidden="true" viewBox="0 0 48 48" class="logo">
           <circle cx="24" cy="24" r="22" class="logo-planet" />
@@ -28,6 +30,7 @@
         <span class="brand-text">404s to Mars</span>
       </div>
 
+      <!-- BOTÓN ALTO CONTRSTE -->
       <nav aria-label="utilidades" class="util-nav">
         <button
           id="toggle-contrast"
@@ -37,6 +40,8 @@
         >
           Alto contraste
         </button>
+
+        <!-- BOTÓN MENOS ANIMACIÓN -->
         <button
           id="toggle-motion"
           class="ghost"
@@ -53,7 +58,7 @@
 
     <!-- MAIN -->
     <main id="contenido" class="container" role="main">
-      <!-- TEXTO E ILUSTRACIÓN -->
+      <!-- TEXTO -->
       <section class="hero" aria-labelledby="titulo-404">
         <div class="parallax" data-depth="0.06" aria-hidden="true">
           <div class="orbit orbit--1"></div>
@@ -70,6 +75,7 @@
           <strong>no encuentra la página.</strong>
         </p>
 
+        <!-- BOTONES -->
         <div class="cta-row">
           <a
             id="home-link"
@@ -89,7 +95,7 @@
           </button>
         </div>
 
-        <!-- PANEL DE ESCANEO -->
+        <!-- ESCANEAR RUTA -->
         <div id="scanner" class="scanner" hidden>
           <div
             class="scanner__bar"
@@ -199,9 +205,7 @@
 
       <!-- MINIJUEGO -->
       <section class="runner" aria-labelledby="runner-title">
-        <h2 id="runner-title" class="runner__title">
-          Mini juego: Rover Runner
-        </h2>
+        <h2 id="runner-title" class="runner__title">Minijuego: Rover Runner</h2>
         <p class="runner__hint">
           Pulsa <kbd>Espacio</kbd> o toca la pantalla para saltar. Evita las
           rocas.
@@ -223,7 +227,8 @@
     </main>
 
     <footer class="site-footer" role="contentinfo">
-      <p>Hecho con ❤️ en Marte • <a href="#" id="share">Compartir</a></p>
+      <p>Hecho con ❤️ en Marte</p>
+      <a href="#" id="share">Compartir</a>
     </footer>
 
     <script src="./js/script.js" defer></script>
