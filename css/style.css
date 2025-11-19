@@ -425,7 +425,7 @@ body {
   transform: rotate(8deg) translateY(-8px);
 }
 
-<<<<<<< HEAD .chip {
+HEAD .chip {
   margin-top: 6px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.08);
@@ -436,7 +436,7 @@ body {
   cursor: pointer;
 }
 
-=======>>>>>>>6d3c5c1 (Rectificaciones botones) .rover--lights-off .beam {
+rover--lights-off .beam {
   display: none;
 }
 
@@ -696,9 +696,18 @@ body {
 }
 
 @keyframes ping {
-  0% { opacity: 0.2; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.6); }
-  100% { opacity: 0.2; transform: scale(1); }
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.6);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
 }
 
 /* MEDIA QUERIES */

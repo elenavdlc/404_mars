@@ -624,3 +624,134 @@ if (bar) bar.style.setProperty("--w", "0%");
   // Inicia el juego
   resetGame();
 })();
+
+// FONDO DE ESTRELLAS Y CONSTELACIONES CON EFECTO INMERSIVO
+(function () {
+  const canvas = document.getElementById("stars");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  let width, height;
+  let stars = [];
+  const STAR_COUNT = 220;
+
+  // Parallax
+  let parallaxX = 0;
+  let parallaxY = 0;
+  let targetParallaxX = 0;
+  let targetParallaxY = 0;
+  const PARALLAX_STRENGTH_X = 25; // cuanto más alto, más se mueve
+  const PARALLAX_STRENGTH_Y = 15;
+  const PARALLAX_EASE = 0.06; // suavidad del movimiento
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    createStars();
+  }
+
+  function createStars() {
+    stars = [];
+    for (let i = 0; i < STAR_COUNT; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.4 + 0.3,
+        baseAlpha: Math.random() * 0.5 + 0.2,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.5 + Math.random() * 0.8,
+      });
+    }
+  }
+
+  function drawConstellations() {
+    const indices = [10, 25, 40, 55, 80, 95, 120, 150, 175, 200].filter(
+      (i) => i < stars.length
+    );
+
+    ctx.lineWidth = 0.6;
+    ctx.strokeStyle = "rgba(180, 200, 255, 0.35)";
+
+    ctx.beginPath();
+    for (let i = 0; i < indices.length - 1; i++) {
+      const a = stars[indices[i]];
+      const b = stars[indices[i + 1]];
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+    }
+    ctx.stroke();
+  }
+
+  function render(time) {
+    ctx.clearRect(0, 0, width, height);
+
+    // Interpolamos hacia el objetivo (movimiento suave)
+    if (!document.body.classList.contains("reduce-motion")) {
+      parallaxX += (targetParallaxX - parallaxX) * PARALLAX_EASE;
+      parallaxY += (targetParallaxY - parallaxY) * PARALLAX_EASE;
+    } else {
+      parallaxX = parallaxY = targetParallaxX = targetParallaxY = 0;
+    }
+
+    ctx.save();
+    ctx.translate(parallaxX, parallaxY);
+
+    // Nebulosa suave
+    const gradient = ctx.createRadialGradient(
+      width * 0.7,
+      height * -0.1,
+      0,
+      width * 0.7,
+      height * -0.1,
+      width * 0.9
+    );
+    gradient.addColorStop(0, "rgba(80, 100, 160, 0.4)");
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    // Estrellas con parpadeo
+    for (const star of stars) {
+      const twinkle =
+        Math.sin((time / 1000) * star.twinkleSpeed + star.twinkleOffset) * 0.3;
+      const alpha = Math.max(0, Math.min(1, star.baseAlpha + twinkle));
+
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(240, 245, 255, ${alpha})`;
+      ctx.fill();
+    }
+
+    // Constelaciones
+    drawConstellations();
+
+    ctx.restore();
+
+    requestAnimationFrame(render);
+  }
+
+  // Parallax con ratón
+  window.addEventListener("pointermove", (e) => {
+    const xNorm = e.clientX / window.innerWidth - 0.5; // -0.5 a 0.5
+    const yNorm = e.clientY / window.innerHeight - 0.5;
+
+    targetParallaxX = -xNorm * PARALLAX_STRENGTH_X;
+    targetParallaxY = -yNorm * PARALLAX_STRENGTH_Y;
+  });
+
+  // Para móvil: un toque arrastrando
+  window.addEventListener("touchmove", (e) => {
+    const touch = e.touches[0];
+    if (!touch) return;
+    const xNorm = touch.clientX / window.innerWidth - 0.5;
+    const yNorm = touch.clientY / window.innerHeight - 0.5;
+
+    targetParallaxX = -xNorm * PARALLAX_STRENGTH_X;
+    targetParallaxY = -yNorm * PARALLAX_STRENGTH_Y;
+  });
+
+  window.addEventListener("resize", resize);
+  resize();
+  requestAnimationFrame(render);
+})();
