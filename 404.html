@@ -66,7 +66,7 @@
         </div>
 
         <h1 id="titulo-404" class="title-404">
-          <span class="title-404__big" aria-hidden="true">404</span>
+          <span class="title-404__big" aria-hidden="true"> ERROR 404</span>
           <span class="sr-only">Error 404</span>
         </h1>
 
@@ -77,14 +77,6 @@
 
         <!-- BOTONES -->
         <div class="cta-row">
-          <a
-            id="home-link"
-            href="/"
-            class="btn primary"
-            aria-label="Volver a la página de inicio (tecla H)"
-          >
-            ← Volver al inicio
-          </a>
           <button
             id="scan"
             class="btn accent"
@@ -111,81 +103,15 @@
           </p>
         </div>
 
-        <!-- ESCENA -->
-        <figure
-          class="scene"
-          aria-label="Superficie de Marte con rover y astronauta"
-        >
-          <!-- MARTE -->
-          <svg
-            class="mars"
-            viewBox="0 0 600 300"
-            role="img"
-            aria-label="Planeta Marte"
-          >
-            <defs>
-              <lineargradient id="marsgrad" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stop-color="var(--mars-1)" />
-                <stop offset="100%" stop-color="var(--mars-2)" />
-              </lineargradient>
-              <filter
-                id="softGlow"
-                x="-50%"
-                y="-50%"
-                width="200%"
-                height="200%"
-              >
-                <fegaussianblur stdDeviation="4" result="blur" />
-                <femerge>
-                  <femergenode in="blur" />
-                  <femergenode in="SourceGraphic" />
-                </femerge>
-              </filter>
-            </defs>
-            <g class="parallax" data-depth="0.03">
-              <circle cx="470" cy="80" r="70" fill="url(#marsGrad)" />
-              <circle cx="440" cy="70" r="8" class="crater" />
-              <circle cx="500" cy="100" r="10" class="crater" />
-            </g>
-            <g class="parallax dunes" data-depth="0.1">
-              <path
-                d="M0,220 C120,190 220,230 340,210 C430,195 520,220 600,205 L600,300 L0,300 Z"
-                class="dune"
-              ></path>
-              <path
-                d="M0,240 C120,210 220,250 340,230 C430,215 520,240 600,225 L600,300 L0,300 Z"
-                class="dune dune--2"
-              ></path>
-            </g>
-          </svg>
-
           <!-- ROBOT -->
-          <div
-            class="rover parallax"
-            data-depth="0.16"
-            role="img"
-            aria-label="Rover con faros"
-          >
-            <div class="rover__body">
-              <div class="rover__mast"></div>
-              <div class="rover__cam"></div>
-            </div>
-            <div class="rover__wheels">
-              <span></span><span></span><span></span>
-            </div>
-            <div class="rover__lights" aria-hidden="true">
-              <span class="beam"></span>
-              <span class="beam"></span>
-            </div>
-            <button
+            <div
               id="toggle-lights"
-              class="chip"
-              aria-pressed="true"
-              title="Alternar luces del rover (R)"
+            
+            
             >
-              Luces rover
-            </button>
-          </div>
+              
+            </div>
+         
 
           <!-- SOMBRA Y RELIEVE DEL ROBOT -->
           <div
@@ -196,8 +122,6 @@
         </figure>
 
         <ul class="hints" aria-label="Atajos de teclado">
-          <li><kbd>H</kbd> Inicio</li>
-          <li><kbd>R</kbd> Luces rover</li>
           <li><kbd>C</kbd> Alto contraste</li>
           <li><kbd>M</kbd> Menos animación</li>
         </ul>
@@ -227,8 +151,12 @@
     </main>
 
     <footer class="site-footer" role="contentinfo">
+<<<<<<< HEAD
       <p>Hecho con ❤️ en Marte</p>
       <a href="#" id="share">Compartir</a>
+=======
+      <p>Ayuda a Rover </p>
+>>>>>>> 6d3c5c1 (Rectificaciones botones)
     </footer>
 
     <script src="./js/script.js" defer></script>
