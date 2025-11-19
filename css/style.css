@@ -147,7 +147,7 @@ body {
 
 /* TÍTULO */
 .title-404 {
-  margin: 8vh 0 8px;
+  margin: 0vh 0 8px;
   text-align: center;
 }
 
@@ -258,7 +258,7 @@ body {
 
 .scanner__bar {
   position: relative;
-  height: 14px;
+  height: 25px;
   border-radius: 999px;
   overflow: hidden;
   background: #0f1630;
